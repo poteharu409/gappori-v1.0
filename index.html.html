@@ -1,0 +1,190 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>寿司ボール抽選 Ver.23</title><style>
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#172746,#283c60);font-family:system-ui,'Hiragino Kaku Gothic ProN',sans-serif;color:white}main{max-width:1100px;margin:auto;padding:15px}header{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}h1{font-size:clamp(22px,4vw,34px);margin:8px 0}.coin{background:#10213c;padding:12px 18px;border-radius:30px;font-weight:800}.grid{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:15px}@media(max-width:850px){.grid{grid-template-columns:1fr}}.panel{background:#fff;color:#23324c;border-radius:18px;padding:15px;margin:12px 0;box-shadow:0 6px 20px #0003}h2{font-size:19px;margin:0 0 12px}.small{font-size:13px;line-height:1.65;color:#5c6980}.status{background:#fff0c5;border-radius:12px;padding:12px;font-weight:800;text-align:center;margin-top:12px;min-height:46px}.arena{position:relative;width:min(100%,340px);aspect-ratio:1;margin:auto;border:12px solid #e7b54d;border-radius:50%;background:#122c45;box-shadow:inset 0 0 0 6px #92571b;overflow:hidden}.rotor{position:absolute;inset:7%;border-radius:50%;background:repeating-conic-gradient(#ae3433 0deg 9deg,#782326 9deg 18deg);transition:transform 3.8s cubic-bezier(.13,.72,.2,1)}.pocket{position:absolute;left:50%;top:50%;width:18%;height:18%;margin:-9%;border-radius:50%;background:#fff7e3;border:2px solid #f4d08c;display:grid;place-items:center;text-align:center;font-size:clamp(9px,1.4vw,12px);font-weight:800;transform:rotate(var(--angle)) translateY(-220%) rotate(calc(-1 * var(--angle)))}.pocket.special{background:#ffc9db}.pocket.hit{background:#ffe054;box-shadow:0 0 0 4px #ffeb70,0 0 18px 6px #ffb900}.center{position:absolute;inset:36%;border-radius:50%;background:#fff5d7;border:5px solid #c98533;display:grid;place-content:center;text-align:center;font-size:clamp(18px,3vw,27px);font-weight:900;z-index:2}.ball{position:absolute;left:46.5%;top:46.5%;width:7%;height:7%;z-index:5;border-radius:50%;background:radial-gradient(circle at 28% 20%,white,#b3d0ec 62%,#45698c);box-shadow:2px 4px 8px #0009;pointer-events:none}.hidden{display:none!important}.bets{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}@media(max-width:500px){.bets{gap:3px}}.bet{min-width:0;border:3px solid #ccd6e7;border-radius:12px;background:#e9f2ff;padding:6px 2px;color:#193355;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;font-weight:800;transition:.15s}.bet:nth-child(1){background:#ffe2e2;border-color:#ee9292}.bet:nth-child(2){background:#fff0d8;border-color:#e9bd74}.bet:nth-child(3){background:#fff9cc;border-color:#e7d76c}.bet:nth-child(4){background:#e0f8d7;border-color:#a6d58e}.bet:nth-child(5){background:#d9fff1;border-color:#8bd7bf}.bet:nth-child(6){background:#d9f4ff;border-color:#8dbfd8}.bet.selected{outline:3px solid #f27618;outline-offset:-1px;transform:translateY(-3px)}.sushi{width:100%;min-height:61px;background:#fff9;border-radius:8px;padding:5px 1px;display:grid;align-content:center;gap:2px;text-align:center;font-size:clamp(10px,1.5vw,13px);word-break:keep-all}.sushi .em{font-size:clamp(18px,3vw,26px)}.bet .foot{font-size:clamp(10px,1.6vw,13px)}.bet .amount{font-size:12px;color:#a74e13}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}button{border:2px solid #c6d1e2;background:white;color:#213450;border-radius:10px;padding:10px 12px;cursor:pointer;font-weight:800}button.primary{background:#e9792a;border-color:#e9792a;color:white}button:disabled{opacity:.5;cursor:not-allowed}.results{display:flex;flex-wrap:wrap;gap:6px}.results span{padding:7px;background:#e6f1ff;border-radius:9px;font-size:13px;font-weight:800}.info{background:#f1f5fb;border-radius:12px;padding:9px;margin-top:10px;font-size:13px;line-height:1.7}.log{max-height:180px;overflow:auto;font-size:13px;line-height:1.8}.badge{border-radius:20px;background:#f7e9c6;padding:5px 10px;font-size:12px}.bet.locked{cursor:default;opacity:.8}.order-card{border:2px solid #9baec8;border-radius:10px;padding:9px;margin:6px 0;background:white}.order-card.free{border-color:#d18b08;background:#fff5cf}.order-card strong{color:#1d3559}.order-card .chosen{font-weight:900;color:#b13f00}.order-card .free-label{background:#d88200;color:white;border-radius:6px;padding:2px 6px;margin-left:5px}.bet.won{box-shadow:0 0 0 4px #e9b13c}.muted{color:#758198;font-size:12px}
+@media(max-width:500px){.arena{width:min(100%,300px)}}#orders{margin-top:8px}#orders .order-card{font-size:14px}
+/* Ver.12 compact one-screen layout */
+html,body{min-height:100%;}body{overflow-x:hidden}main{max-width:1280px;padding:6px 10px}header{min-height:40px;flex-wrap:nowrap}h1{font-size:clamp(16px,2.2vw,23px);margin:0}header>div:first-child>div{display:none}.coin{padding:7px 12px;white-space:nowrap}.help-button{margin-left:auto;padding:6px 10px}.grid{grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:9px;align-items:start}.panel{margin:6px 0;padding:9px;border-radius:12px}h2{font-size:15px;margin:0 0 5px}.arena-heading{display:flex;align-items:center;justify-content:space-between;gap:8px}.arena-heading h2{margin:0}.arena-heading button{padding:7px 9px;font-size:12px}.arena{width:min(100%,min(35vh,300px));border-width:8px}.pocket{font-size:9px}.center{font-size:16px}.status{margin-top:5px;min-height:30px;padding:6px;font-size:12px}#orders{margin-top:4px;max-height:clamp(75px,20vh,180px);overflow:auto;padding:5px}.order-card{margin:3px 0;padding:5px;font-size:12px!important}.order-card .muted{font-size:10px}.results{gap:3px}.results span{padding:4px;font-size:11px}.arena-panel>h2{margin-top:7px!important}.small{font-size:11px;line-height:1.3;margin:4px 0}.actions{gap:5px;margin-top:6px}.actions button,button{padding:6px 8px;font-size:12px}.sushi{min-height:43px;padding:2px 0;font-size:10px;gap:0}.sushi .em{font-size:17px}.bet{padding:3px 1px;gap:2px;border-width:2px;border-radius:8px}.bet .foot,.bet .amount{font-size:10px}.bets{gap:3px}.info{margin-top:5px;padding:6px;font-size:11px;line-height:1.4}.muted{font-size:10px;margin:5px 0}.log{max-height:75px;font-size:11px}.panel:last-child .info{margin:3px 0}#dishTypes{margin-top:5px}#dishTypes button{flex:1;min-width:0}dialog{border:0;border-radius:16px;max-width:min(520px,92vw);padding:20px;color:#24364d;box-shadow:0 12px 50px #0008}dialog::backdrop{background:#081428b8}.help-top{display:flex;justify-content:space-between;align-items:center}dialog p{line-height:1.6;font-size:14px}
+@media(min-width:851px){body{height:100dvh;overflow:hidden}.grid{height:calc(100dvh - 52px)}.grid>section,.grid>aside{min-height:0;overflow:auto;scrollbar-width:thin}.arena{width:min(100%,min(34vh,290px))}}
+@media(max-width:850px){.grid{grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr)}.arena{width:min(100%,240px)}.pocket{font-size:8px}main{padding:5px}.panel{padding:6px}}
+@media(max-width:600px){body{overflow:auto}.grid{grid-template-columns:1fr}.grid>section,.grid>aside{overflow:visible}.arena{width:min(100%,min(31vh,240px))}.panel{margin:4px 0}.sushi{min-height:40px}.bet .amount{font-size:9px}.order-card{font-size:11px!important}#orders{max-height:100px}.arena-panel>h2{margin-top:5px!important}header{gap:5px}.coin{font-size:12px;padding:5px}.help-button{font-size:11px}h1{font-size:16px}}
+@media(max-height:700px) and (min-width:851px){.arena{width:min(100%,min(31vh,230px))}.sushi{min-height:37px}.order-card{padding:3px}#orders{max-height:100px}.panel{padding:6px}}
+#freePanel{border:2px solid #e6a121;background:#fff7d7}#freePanel select{max-width:100%;padding:5px;border-radius:6px;margin-top:5px}#interrupt{background:#bd3944;color:white;border-color:#bd3944}.arena-heading{flex-wrap:wrap}.arena-heading h2{margin-right:auto}
+
+.order-card .match-row{display:flex;flex-wrap:wrap;gap:4px;margin:5px 0}
+.order-card .match-piece{display:inline-flex;align-items:center;gap:3px;padding:4px 6px;border-radius:7px;border:2px solid #b5c1d1;background:#f0f3f8;color:#36445c;font-weight:800;font-size:12px}
+.order-card .match-piece.matched{background:#b8f5ce;border-color:#13a34a;color:#075c2a;box-shadow:0 0 0 2px #6fe6a955}
+.order-card .match-piece.free-match{background:#fff1b0;border-color:#d59a00;color:#775100}
+.order-card .match-progress{font-weight:900;color:#23456b;font-size:12px}
+.order-card .match-progress.complete{color:#08783a}
+.order-card.just-hit{animation:matchPulse .75s ease-out}
+@keyframes matchPulse{0%{box-shadow:0 0 0 0 #2aca72bb}55%{box-shadow:0 0 0 7px #2aca7244}100%{box-shadow:0 0 0 0 transparent}}
+.results span.relevant{background:#c0f7d3;color:#09662e;border:2px solid #20a957}
+
+/* Ver.22: accessible free-choice dialog-like overlay within the game */
+#freePanel:not(.hidden){position:fixed;inset:50% auto auto 50%;transform:translate(-50%,-50%);z-index:30;width:min(620px,calc(100vw - 24px));max-height:min(85dvh,740px);overflow-y:auto;background:#fffdf4;border:3px solid #e9a52a;box-shadow:0 0 0 100vmax #07152ab8,0 14px 55px #0009;border-radius:18px;padding:16px;color:#25314b;font-size:14px;line-height:1.45}
+.free-header{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:2px solid #f0d79b;padding-bottom:10px}
+.free-header strong{font-size:clamp(17px,3vw,23px);color:#935000}.free-sub{font-size:12px;margin-top:4px;color:#52627c}.free-count{background:#ffdc76;border-radius:20px;padding:5px 9px;font-weight:900;white-space:nowrap}
+.free-order{background:white;border:2px solid #ead7b0;border-radius:12px;padding:10px;margin:10px 0}
+.free-order-title{font-weight:900;font-size:15px}.free-picks{display:flex;flex-wrap:wrap;gap:5px;margin:7px 0}.free-picks span{background:#edf4ff;border-radius:8px;padding:5px 8px;font-weight:800}
+.free-question{font-weight:800;margin:8px 0 5px;color:#925000}.free-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:7px}
+#freePanel .free-option{border:2px solid #bdcce1;background:#f7faff;color:#263750;border-radius:10px;padding:11px 7px;font-size:13px;min-height:45px}
+#freePanel .free-option.chosen{background:#fff0ae;border-color:#dc8800;color:#754100;box-shadow:inset 0 0 0 1px #dc8800}
+.free-footer{position:sticky;bottom:-16px;background:#fffdf4;padding:12px 0 3px;display:flex;justify-content:center;border-top:1px solid #e7d5ad}
+#freeDone{width:100%;font-size:15px;padding:12px}.free-empty{padding:20px;text-align:center;font-weight:700}
+@media(max-width:600px){#freePanel:not(.hidden){max-height:88dvh;padding:12px}.free-options{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Ver.23: clear per-piece free choice status */
+.free-legend{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;padding:10px;background:#edf3fc;border-radius:10px;font-weight:900}
+.free-legend span{padding:5px 9px;border-radius:7px}
+.free-legend .yes{background:#c4f6d5;color:#09682f}.free-legend .no{background:#ffe1e1;color:#a12231}.free-legend .fc{background:#ffe7a1;color:#805000}
+.free-picks{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:8px!important}
+.free-picks .free-piece{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:77px;border:3px solid #cbd4df;border-radius:12px;background:#f0f3f8;color:#43536a;padding:9px 5px;text-align:center;font-size:14px}
+.free-picks .free-piece.hit{background:#c6f8d8;border-color:#159947;color:#08622e}
+.free-picks .free-piece.miss{background:#ffe4e4;border-color:#dc6060;color:#9c2632}
+.free-picks .free-piece strong{font-size:14px}.free-picks .free-piece small{font-size:12px;font-weight:900}
+.free-order-summary{font-weight:900;font-size:14px;margin:9px 0;padding:9px;border-radius:8px;background:#eaf2ff;color:#23436a}
+.free-order-summary.all-hit{background:#c6f8d8;color:#08622e}
+.free-order .free-question{font-size:15px}
+#freePanel .free-option{min-height:56px;font-size:14px}
+#freePanel .free-option.chosen{background:#ffe28b;border-color:#c68100;box-shadow:0 0 0 2px #f1bc39}
+</style></head><body><main><header><div><h1>🍣 寿司ボール抽選 Ver.23</h1><div>丸皿・ゲタ盛り・舟盛り × 回転ボール抽選</div></div><button id="helpOpen" class="help-button">❔ 遊び方</button><div class="coin">🪙 <span id="coins">300</span> 枚</div></header><div class="grid"><section><div class="panel arena-panel"><div class="arena-heading"><h2>🎯 ボール抽選盤</h2><button class="primary" id="start">🎱 抽選スタート</button><button id="interrupt" class="hidden">⏹ 中断</button></div><div class="arena" id="arena"><div class="rotor" id="rotor"></div><div class="center">🍣<small style="font-size:10px">SUSHI BALL</small></div><div class="ball hidden" id="ball"></div></div><div id="freePanel" class="info hidden"></div><div class="status" id="status" aria-live="polite">ランダムに並んだ寿司セットにBETしよう！</div><h2 style="margin-top:14px">🧾 自分が賭けたお皿</h2><div class="info" id="orders">まだ注文していません</div><h2 style="margin-top:14px">抽選結果（5球・18皿と抽選盤が一致）</h2><div class="results" id="results">まだ抽選していません</div></div></section><aside><div class="panel"><h2>🍱 今回の18皿（少ない順） <span class="badge" id="round">第1回</span></h2><p class="small">毎回、ネタごとに指定された出現皿数の範囲で合計18皿をランダムに配置します。1皿だけの寿司は必ず1〜2種類登場します。選択欄は出現数が少ない寿司から表示します（抽選盤の位置は変わりません）。お皿を選んでから寿司をタップして注文します。注文は最大3皿です。</p><div class="actions" id="dishTypes"><button data-dish="0" class="primary">🍽️ 丸皿<br>2貫・5枚</button><button data-dish="1">🍣 ゲタ盛り<br>3貫・10枚</button><button data-dish="2">🚢 舟盛り<br>5貫・20枚</button></div><p class="small" id="guide">丸皿：寿司を2貫選んでください（同じネタを2回選択できます）。</p><div class="actions" id="bulkOptions"><button data-mult="1" class="primary">×1 購入</button><button data-mult="10">×10 まとめ買い</button></div><div class="bets" id="bets" style="grid-template-columns:repeat(6,minmax(0,1fr))"></div><div class="info">今回のBET：<b id="total">0</b> 枚　｜　注文：<b id="count">0</b> / 3 皿<br>フリーチョイス：ゲタ30%／舟盛り70%（不足した寿司1貫だけを補完）<br>配当：少ないネタは高配当／多いネタの重複選択は低配当（注文時に確定）</div><div class="actions"><button id="clear">最後の選択を戻す</button><button id="cancelOrders">注文を全取消</button><button id="next" class="hidden">次のラウンドへ ➜</button></div><p class="muted">抽選中はBETできません。次のラウンドで新しい寿司セットに変わります。</p></div><div class="panel"><h2>📊 記録</h2><div class="info">当たり列の累計：<b id="wins">0</b>　｜　最高獲得：<b id="best">0</b> 枚</div><h2 style="margin-top:12px">プレイ履歴</h2><div class="log" id="log">まだ記録がありません</div><div class="actions"><button id="reset">メダル・記録リセット</button></div></div></aside></div></main><dialog id="helpDialog"><div class="help-top"><h2>📖 遊び方</h2><button id="helpClose">✕ 閉じる</button></div><p>① 毎ラウンド18皿の寿司がランダムに並び、同じ寿司は隣り合います。1皿だけの寿司は必ず1〜2種類登場します。</p><p>② 丸皿・ゲタ盛り・舟盛りを選び、必要な貫数の寿司をタップして注文します。注文は1ラウンド最大3皿です。ゲタ盛り・舟盛りは×1または×10で購入できます。×10は同じ注文を10口まとめて買う方式です。</p><p>③ まず3球抽選し、フリーチョイスを持つお皿の不足ネタを選択します。その後、残り2球を抽選します。入賞したポケットは光り続け、同じポケットには再入賞しません。</p><p>④ 注文した寿司が必要な貫数すべて出れば成立。同じ寿司を複数選ぶ場合、その注文内で抽選盤にある皿数を超えて選べません。</p><p>⭐ ゲタ盛り30%、舟盛り70%でフリーチョイスが付きます。3球目の後に、各お皿で不足ネタを1貫だけ選択して補えます。少ないネタを選ぶほど配当が増えます。同じネタの連続選択は、少ないネタなら配当アップ、多いネタなら配当ダウンになります。中断するとそのラウンドのBETは返却されます。</p><p class="muted">実機を参考にしたオリジナルゲームです。配当・BET枚数・判定は仮設定です。ゲーム内メダルのみ使用します。</p></dialog><script>
+(()=>{'use strict';const $=id=>document.getElementById(id);const names=["まぐろ","はまち","サーモン","いわし","あじ","いか","たこ","ほたて","ネギトロ","カンパチ","カズノコ","しめさば","かつお","えんがわ","こはだ","ふぐ","ステーキ","うなぎ","あなご","大トロ","中トロ","たい","うに","赤貝","コーン","かんぴょう巻き","いなり寿司","納豆巻き","かっぱ巻き","鉄火巻き","たまご","カリフォルニアロール","ほっき貝","えび"],icons=["🍣","🐟","🍣","🐟","🐟","🦑","🐙","🐚","🍣","🐟","🐟","🐟","🐟","🐟","🐚","🐡","🥩","🐟","🐟","🍣","🍣","🐟","🟠","🐚","🌽","🍙","🍘","🍙","🥒","🍙","🥚","🍣","🐚","🦐"];let pockets=[];const dishes=[{name:"丸皿",need:2,cost:5,prize:20},{name:"ゲタ盛り",need:3,cost:10,prize:55},{name:"舟盛り",need:5,cost:20,prize:180}];let dish=0,building=[],orders=[],buyMultiplier=1;let save={coins:300,wins:0,best:0,round:1,log:[]};try{let x=JSON.parse(localStorage.getItem('sushi-ball-v4'));if(x&&Number.isFinite(x.coins))save={...save,...x}}catch(e){}let interruptRequested=false,roundBet=0,freeSelections={},freeResolve=null;let sets=[],selected=new Set(),phase='bet',results=[],rot=0,availablePockets=[];const plateRanges={};
+for(const n of ['コーン','かんぴょう巻き','いなり寿司','納豆巻き','かっぱ巻き','鉄火巻き','たまご','カリフォルニアロール','ほっき貝','えび'])plateRanges[n]=[4,5];
+for(const n of ['大トロ','中トロ','たい','うに','赤貝'])plateRanges[n]=[1,1];
+for(const n of ['まぐろ','はまち','サーモン','いわし','あじ','いか','たこ','ほたて','ネギトロ','カンパチ','カズノコ'])plateRanges[n]=[3,4];
+for(const n of ['しめさば','かつお','えんがわ','こはだ'])plateRanges[n]=[2,3];
+for(const n of ['ふぐ','ステーキ','うなぎ','あなご'])plateRanges[n]=[1,2];
+function persist(){try{localStorage.setItem('sushi-ball-v4',JSON.stringify(save))}catch(e){}}function rand(n){return Math.floor(Math.random()*n)}function shuffle(a){for(let i=a.length-1;i>0;i--){let j=rand(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}function newSets(){
+// Select unique sushi and allocate 18 plates without violating any category range.
+// Adjacent duplicates are kept together; every round has 1 or 2 one-plate sushi.
+let groups=null;
+for(let attempt=0;attempt<250&&!groups;attempt++){
+  let pool=shuffle([...names.keys()]);let picked=[],left=18, singleCount=0;
+  for(const v of pool){
+    const [min,max]=plateRanges[names[v]];
+    if(min>left)continue;
+    if(min===1 && singleCount>=2)continue;
+    // Keep a mix of sushi rather than filling the board with only a few types.
+    if(picked.length<4 && left-min>0 && rand(4)===0)continue;
+    const low=(min===1 && singleCount>=2)?2:min;
+    if(low>Math.min(max,left))continue;
+    const n=low+rand(Math.min(max,left)-low+1);
+    picked.push({v,n});left-=n;
+    if(n===1)singleCount++;
+    if(left===0){if(picked.some(g=>g.n===1))groups=picked;break;}
+  }
+}
+if(!groups){
+  // Guaranteed valid fallback: 5+4+4+3+1+1 = 18.
+  const take=(n)=>shuffle([...names.keys()].filter(v=>plateRanges[names[v]][0]<=n&&plateRanges[names[v]][1]>=n));
+  const used=new Set();groups=[];
+  for(const n of [5,4,4,3,1,1]){const v=take(n).find(v=>!used.has(v));used.add(v);groups.push({v,n});}
+}
+shuffle(groups);sets=groups.flatMap(g=>Array(g.n).fill(g.v));
+pockets=[...sets];renderPockets();selected.clear();building=[];orders=[];results=[];availablePockets=shuffle([...pockets.keys()]);phase='bet';interruptRequested=false;roundBet=0;freeSelections={};$('freePanel').classList.add('hidden');$('interrupt').classList.add('hidden');
+$('next').classList.add('hidden');$('results').textContent='まだ抽選していません';
+document.querySelectorAll('.pocket').forEach(x=>x.classList.remove('hit'));
+$('status').textContent='18皿の寿司が並びました！ お皿を選んでBETしよう。';render()}
+function renderPockets(){ $('rotor').innerHTML='';pockets.forEach((v,i)=>{let el=document.createElement('div');el.className='pocket';el.style.setProperty('--angle',`${i*360/pockets.length}deg`);el.innerHTML=`<span>${icons[v]}<br>${names[v]}</span>`;$('rotor').appendChild(el)});$('rotor').style.transform='rotate(0deg)';rot=0;}function prizeFor(o){
+ // Each selected piece contributes according to the number of copies on the board.
+ // Repeating common sushi reduces the payout; repeating rare sushi increases it.
+ const freq={};for(const v of sets)freq[v]=(freq[v]||0)+1;
+ const picks={};for(const v of o.picks)picks[v]=(picks[v]||0)+1;
+ const rarity=o.picks.reduce((sum,v)=>sum+({1:2.3,2:1.7,3:1.15,4:.76,5:.52}[freq[v]]||.52),0)/o.picks.length;
+ let repetition=1;
+ for(const [v,c] of Object.entries(picks)){
+   if(c<2)continue;
+   const count=freq[v];
+   const factor=count<=2?1.38:count===3?1.16:count===4?.78:.58;
+   repetition*=Math.pow(factor,c-1);
+ }
+ const payout=dishes[o.dish].prize*rarity*repetition;
+ return Math.max(5,Math.round(payout/5)*5);
+}
+function render(){ $('coins').textContent=save.coins;$('wins').textContent=save.wins;$('best').textContent=save.best;$('round').textContent=`第${save.round}回`;
+$('bets').innerHTML=[...sets.keys()].sort((a,b)=>sets.filter(x=>x===sets[a]).length-sets.filter(x=>x===sets[b]).length || a-b).map(i=>{let v=sets[i];return `<button class="bet ${building.includes(i)?'selected':''} ${phase!=='bet'?'locked':''}" data-i="${i}" ${phase!=='bet'?'disabled':''}><span class="sushi"><span class="em">${icons[v]}</span>${names[v]}</span><span class="foot">${i+1}皿目</span><span class="amount">${building.filter(j=>sets[j]===v).length>=sets.filter(x=>x===v).length?'🔒 選択上限':building.some(j=>sets[j]===v)?'🟠 '+building.filter(j=>sets[j]===v).length+' / '+sets.filter(x=>x===v).length+'貫':'最大'+sets.filter(x=>x===v).length+'貫'}</span></button>`}).join('');
+let total=orders.reduce((n,o)=>n+dishes[o.dish].cost*(o.quantity||1),0);$('total').textContent=total;$('count').textContent=orders.length;$('clear').disabled=phase!=='bet'||!building.length;$('cancelOrders').disabled=phase!=='bet'||!orders.length;$('start').disabled=phase!=='bet'||!orders.length||save.coins<total;$('start').classList.toggle('hidden',phase!=='bet');$('interrupt').classList.toggle('hidden',!['drawing','free'].includes(phase));$('interrupt').disabled=interruptRequested;$('next').classList.toggle('hidden',phase!=='done');$('log').innerHTML=save.log.length?save.log.map(x=>`<div>${x}</div>`).join(''):'まだ記録がありません';document.querySelectorAll('[data-mult]').forEach(b=>{b.classList.toggle('primary',Number(b.dataset.mult)===buyMultiplier);b.disabled=phase!=='bet'||dish===0});$('guide').textContent=`${dishes[dish].name}：寿司を${dishes[dish].need}貫選択（${building.length}/${dishes[dish].need}）。同じネタは抽選盤にある皿数まで選べます。ゲタ盛り30%、舟盛り70%でフリーチョイス付き。ゲタ・舟盛りは×10購入可能。`;document.querySelectorAll('[data-dish]').forEach(b=>{b.classList.toggle('primary',Number(b.dataset.dish)===dish);b.disabled=phase!=='bet'});$('orders').innerHTML=orders.length?'<b>🧾 あなたが賭けたお皿</b>'+orders.map((o,i)=>`<div class="order-card ${o.free?'free':''}"><strong>${i+1}. ${dishes[o.dish].name} ×${o.quantity||1}</strong> <span class="chosen">${o.picks.map(v=>icons[v]+' '+names[v]).join(' ＋ ')}</span>${o.free?'<span class="free-label">⭐ フリーチョイス付き</span>':''}<div class="muted">BET ${dishes[o.dish].cost*(o.quantity||1)}枚 ｜ 配当 ${prizeFor(o)*(o.quantity||1)}枚 ｜ ${o.free?'フリーチョイスで不足した寿司1貫だけを補完':'選んだ寿司がすべて出れば成立'}</div></div>`).join(''):'まだ注文していません';updateMatchHighlights();}
+function pick(i){if(phase!=='bet')return;if(orders.length>=3){$('status').textContent='賭けられるお皿は1ラウンド最大3つまでです';return}let v=sets[i];const available=sets.filter(x=>x===v).length;const chosen=building.filter(j=>sets[j]===v).length;if(chosen>=available){$('status').textContent=`${names[v]}は${available}皿しかないため、同じ注文で${available+1}貫以上選べません。`;render();return}building.push(i);if(building.length===dishes[dish].need){let total=orders.reduce((n,o)=>n+dishes[o.dish].cost*(o.quantity||1),0);if(total+dishes[dish].cost*(dish===0?1:buyMultiplier)>save.coins){building.pop();$('status').textContent='メダルが足りません';render();return}let quantity=dish===0?1:buyMultiplier;let free=dish===1?Math.random()<.30:dish===2?Math.random()<.70:false;orders.push({dish,picks:building.map(j=>sets[j]),free,quantity});building=[];$('status').textContent=`${dishes[dish].name}を注文しました！ 続けてBETできます。`;}render()}
+function wait(ms){return new Promise(r=>setTimeout(r,ms))}function animateBall(index){return new Promise(resolve=>{let b=$('ball'),arena=$('arena'),rotor=$('rotor');let size=arena.clientWidth;let finalRot=rot+1080+rand(3)*360;let target=(index*360/pockets.length-90+finalRot)*Math.PI/180;let initial=target-Math.PI*2*8.3;rot=finalRot;rotor.style.transform=`rotate(${rot}deg)`;b.classList.remove('hidden');let start=performance.now(),duration=4300;function frame(now){let t=Math.min(1,(now-start)/duration),ease=1-Math.pow(1-t,3.1),a=initial+(target-initial)*ease;let r=t<.7?size*(.41-.045*t/.7):size*(.365-.03*(t-.7)/.3)+Math.sin((t-.7)/.3*Math.PI*7)*(1-(t-.7)/.3)*size*.01;b.style.transform=`translate(${Math.cos(a)*r}px,${Math.sin(a)*r}px)`;if(t<1)requestAnimationFrame(frame);else{b.style.transform=`translate(${Math.cos(target)*size*.335}px,${Math.sin(target)*size*.335}px)`;setTimeout(()=>{b.classList.add('hidden');resolve()},250)}}requestAnimationFrame(frame)})}function updateMatchHighlights(animate=false){
+ const cards=document.querySelectorAll('#orders .order-card');
+ orders.forEach((o,i)=>{
+  const card=cards[i];if(!card)return;
+  const counts=new Map();results.forEach(v=>counts.set(v,(counts.get(v)||0)+1));
+  const chosen=freeSelections[i];let freeAvailable=o.free&&chosen!==undefined;
+  let matched=0;const parts=o.picks.map(v=>{
+   let cls='',label='未的中';
+   if((counts.get(v)||0)>0){counts.set(v,counts.get(v)-1);cls='matched';label='的中';matched++}
+   else if(freeAvailable&&v===chosen){freeAvailable=false;cls='free-match';label='FC';matched++}
+   return `<span class="match-piece ${cls}">${icons[v]} ${names[v]} ${cls==='matched'?'✓':cls==='free-match'?'⭐':'○'}</span>`;
+  });
+  const complete=matched===o.picks.length;
+  const old=card.querySelector('.match-progress');const previous=old?Number(old.dataset.matched):0;
+  let area=card.querySelector('.match-detail');if(!area){area=document.createElement('div');area.className='match-detail';card.appendChild(area)}
+  area.innerHTML=`<div class="match-row">${parts.join('')}</div><div class="match-progress ${complete?'complete':''}" data-matched="${matched}">${complete?'🎉 必要な寿司が全部そろいました！':`🎯 的中 ${matched} / ${o.picks.length}貫`}</div>`;
+  if(animate&&matched>previous){card.classList.remove('just-hit');void card.offsetWidth;card.classList.add('just-hit')}
+ });
+}
+function drawResult(){
+ const wanted=new Set(orders.flatMap(o=>o.picks));
+ $('results').innerHTML=results.map((v,i)=>`<span class="${wanted.has(v)?'relevant':''}">${i+1}球：${icons[v]} ${names[v]}${wanted.has(v)?' ✓':''}</span>`).join('');
+ updateMatchHighlights(true);
+}function stopRound(){save.coins+=roundBet;phase='done';interruptRequested=false;$('freePanel').classList.add('hidden');$('status').textContent=`⏹ 中断しました。BET ${roundBet}枚を返却しました。`;save.log.unshift(`第${save.round}回：中断（${roundBet}枚返却）`);save.log=save.log.slice(0,15);persist();render()}
+function freeChoice(){return new Promise(resolve=>{
+ freeResolve=resolve;phase='free';render();
+ const eligible=orders.map((o,i)=>({o,i})).filter(({o})=>o.free);
+ const panel=$('freePanel');panel.classList.remove('hidden');
+ let html='<div class="free-header"><div><strong>⭐ フリーチョイス選択タイム</strong><div class="free-sub">3球終了！ 緑は的中、赤はまだ当たっていない寿司です。</div></div><span class="free-count">残り2球</span></div>';
+ html+='<div class="free-legend"><span class="yes">✓ 緑：的中</span><span class="no">✕ 赤：未的中</span><span class="fc">⭐ 黄：補完する寿司</span></div>';
+ if(!eligible.length){html+='<div class="free-empty">今回フリーチョイス付きのお皿はありません。</div>'}
+ for(const {o,i} of eligible){
+   const remaining=[...results],missing=[];
+   const pieces=o.picks.map(v=>{const j=remaining.indexOf(v);const hit=j>=0;if(hit)remaining.splice(j,1);else missing.push(v);return {v,hit}});
+   const options=[...new Set(missing)];
+   const hitCount=pieces.filter(p=>p.hit).length;
+   html+=`<div class="free-order"><div class="free-order-title">${i+1}皿目：${dishes[o.dish].name} ×${o.quantity||1}</div><div class="free-order-summary ${hitCount===pieces.length?'all-hit':''}">${hitCount===pieces.length?'🎉 すべて的中しています！':`現在 ${hitCount} / ${pieces.length}貫 的中　・　残り ${pieces.length-hitCount}貫`}</div><div class="free-picks">${pieces.map(({v,hit})=>`<div class="free-piece ${hit?'hit':'miss'}"><strong>${icons[v]} ${names[v]}</strong><small>${hit?'✓ 的中':'✕ 未的中'}</small></div>`).join('')}</div><div class="free-question">${options.length?'⭐ 赤色の寿司から補完する1貫を選択':'補完の必要はありません'}</div><div class="free-options" data-free-group="${i}"><button class="free-option chosen" data-free-pick="" data-free-order="${i}">補完しない</button>${options.map(v=>`<button class="free-option" data-free-pick="${v}" data-free-order="${i}">⭐ ${icons[v]} ${names[v]} +1貫</button>`).join('')}</div></div>`;
+ }
+ html+='<div class="free-footer"><button id="freeDone" class="primary">選択を決定して残り2球へ ▶</button></div>';
+ panel.innerHTML=html;
+ panel.querySelectorAll('[data-free-pick]').forEach(btn=>btn.onclick=()=>{
+   const i=btn.dataset.freeOrder;
+   panel.querySelectorAll(`[data-free-order="${i}"]`).forEach(b=>b.classList.remove('chosen'));
+   btn.classList.add('chosen');
+ });
+ panel.querySelector('#freeDone').onclick=()=>{
+   panel.querySelectorAll('.free-option.chosen').forEach(btn=>{
+     if(btn.dataset.freePick!=='')freeSelections[btn.dataset.freeOrder]=Number(btn.dataset.freePick);
+   });
+   panel.classList.add('hidden');updateMatchHighlights(true);freeResolve=null;resolve();
+ };
+ $('status').textContent='⭐ フリーチョイスを選択して、残り2球へ進もう！';
+})}
+async function play(){let bet=orders.reduce((n,o)=>n+dishes[o.dish].cost*(o.quantity||1),0);if(phase!=='bet'||!orders.length||save.coins<bet)return;phase='drawing';roundBet=bet;interruptRequested=false;freeSelections={};save.coins-=bet;persist();render();for(let n=1;n<=5;n++){if(interruptRequested){stopRound();return}if(n===4){await freeChoice();if(interruptRequested){stopRound();return}phase='drawing';render()}$('status').textContent=`${n}球目を抽選中…`;let index=availablePockets.pop();await animateBall(index);document.querySelectorAll('.pocket').forEach((p,i)=>{if(i===index)p.classList.add('hit')});let val=pockets[index];results.push(val);drawResult();$('status').textContent=`${n}球目：${names[val]}！`;await wait(450);if(interruptRequested){stopRound();return}}finish()}
+function evaluateOrder(o,i){
+  // Compare sushi counts, not just sushi names. A free choice substitutes
+  // exactly one missing piece and only if it was chosen at the 3-ball pause.
+  const drawn=new Map();for(const v of results)drawn.set(v,(drawn.get(v)||0)+1);
+  const required=new Map();for(const v of o.picks)required.set(v,(required.get(v)||0)+1);
+  let missing=[];for(const [v,n] of required){const lack=Math.max(0,n-(drawn.get(v)||0));for(let k=0;k<lack;k++)missing.push(v)}
+  const chosen=freeSelections[i];const freeUsed=!!o.free && chosen!==undefined && missing.includes(chosen);
+  if(freeUsed)missing.splice(missing.indexOf(chosen),1);
+  return {won:missing.length===0,missing,freeUsed};
+}
+function finish(){
+  const checks=orders.map((o,i)=>evaluateOrder(o,i));
+  const prize=orders.reduce((sum,o,i)=>sum+(checks[i].won?prizeFor(o)*(o.quantity||1):0),0);
+  const hits=checks.filter(c=>c.won).length;
+  const bet=orders.reduce((n,o)=>n+dishes[o.dish].cost*(o.quantity||1),0);
+  save.coins+=prize;save.wins+=hits;save.best=Math.max(save.best,prize);
+  $('status').textContent=hits?`🎉 ${hits}注文成立！ +${prize}枚`:'全注文不成立：獲得0枚';
+  save.log.unshift(`第${save.round}回：BET ${bet}枚 / 成立${hits}注文 / 獲得${prize}枚`);
+  save.log=save.log.slice(0,15);phase='done';persist();render();
+  document.querySelectorAll('#orders .order-card').forEach((card,i)=>{
+    const c=checks[i],won=c.won;
+    card.style.borderColor=won?'#18a55a':'#dc5a5a';card.style.background=won?'#e1ffeb':'#fff0f0';
+    const needed=orders[i].picks.map(v=>names[v]).join('・');
+    const drawn=results.map(v=>names[v]).join('・');
+    const free=c.freeUsed?` / フリーチョイス：${names[freeSelections[i]]} 1貫`:'/ フリーチョイス補完なし';
+    card.insertAdjacentHTML('beforeend',`<div style="font-weight:900;color:${won?'#127c3d':'#ad3535'}">${won?'🎉 成立！':'✖ 不成立'}（獲得 ${won?prizeFor(orders[i])*(orders[i].quantity||1):0}枚）</div><div class="muted">必要：${needed}<br>抽選：${drawn}<br>${free}${c.missing.length?'<br>不足：'+c.missing.map(v=>names[v]).join('・'):''}</div>`);
+  });
+}
+function next(){if(phase!=='done')return;save.round++;persist();newSets()}$('bets').onclick=e=>{let b=e.target.closest('[data-i]');if(b)pick(Number(b.dataset.i))};$('bulkOptions').onclick=e=>{let b=e.target.closest('[data-mult]');if(!b||phase!=='bet'||dish===0)return;buyMultiplier=Number(b.dataset.mult);render()};$('dishTypes').onclick=e=>{let b=e.target.closest('[data-dish]');if(!b||phase!=='bet')return;dish=Number(b.dataset.dish);building=[];render()};$('clear').onclick=()=>{if(phase==='bet')building.pop();render()};$('cancelOrders').onclick=()=>{if(phase!=='bet')return;orders=[];building=[];render()};$('start').onclick=play;$('interrupt').onclick=()=>{if(!['drawing','free'].includes(phase))return;interruptRequested=true;$('interrupt').disabled=true;$('status').textContent='⏹ 中断予約：現在の抽選が終わり次第停止します';if(phase==='free'&&freeResolve){let r=freeResolve;freeResolve=null;$('freePanel').classList.add('hidden');r()}};$('helpOpen').onclick=()=>$('helpDialog').showModal();$('helpClose').onclick=()=>$('helpDialog').close();$('next').onclick=next;$('reset').onclick=()=>{if(phase==='drawing'||phase==='free')return;if(!confirm('メダルと記録をリセットしますか？'))return;save={coins:300,wins:0,best:0,round:1,log:[]};persist();newSets()};newSets();})();
+</script></body></html>
